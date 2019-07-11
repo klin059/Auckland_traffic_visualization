@@ -32,7 +32,7 @@ df.set_index('count_date', inplace = True)
 df.drop_duplicates(inplace = True)
 df.sort_index(inplace = True)
 df_original = df.copy()
-df = df[df.index > '2010-12-01']  # for now set this restriction to limit resources
+df = df[df.index > '2010-01-01']  # for now set this restriction to limit resources
 epoch = datetime.utcfromtimestamp(0)
 def unix_time_millis(dt):
     return (dt - epoch).total_seconds() #* 1000.0
