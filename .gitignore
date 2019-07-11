@@ -1,4 +1,4 @@
 venv
 __pycache__
 gitignore_version/
-images/
+config.py

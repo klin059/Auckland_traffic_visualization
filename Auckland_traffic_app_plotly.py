@@ -33,7 +33,7 @@ df.set_index('count_date', inplace = True)
 #df.drop_duplicates(inplace = True)
 #df.sort_index(inplace = True)
 #df_original = df.copy()
-#df = df[df.index > '2010-01-01']  # for now set this restriction to limit resources
+#df = df[df.index > '2018-01-01']  # for now set this restriction to limit resources
 epoch = datetime.utcfromtimestamp(0)
 def unix_time_millis(dt):
     return (dt - epoch).total_seconds() #* 1000.0
@@ -242,14 +242,11 @@ def update_map(selected_volumes, selected_period, selected_date_value, min_sampl
     layout = define_layout()
     return {'data':data, 'layout':layout}  #m._repr_html_()
 
-def filter_data_by_coord(df, lon, lat):
-    return df[(df['longitude'] == lon) & (df['latitude'] == lat)]
-
 @app.callback(
     dash.dependencies.Output('time_series_plot', 'figure'),
     [dash.dependencies.Input('Auck_map', 'clickData')])
 def display_click_data(clickData):
-    if not clickData:
+    if clickData is None:
         data = [go.Scatter(x = np.linspace(0, 1, 10), y = np.random.randn(10))]
         plot_title = "Click a marker to show historical traffic count"
     else:
@@ -271,4 +268,4 @@ def display_click_data(clickData):
     return {'data':data, 'layout':layout}
 
 if __name__ == '__main__':
-    app.run_server(debug=False)
+    app.run_server(debug=True)
