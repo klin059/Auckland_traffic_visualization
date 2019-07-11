@@ -28,11 +28,12 @@ app = dash.Dash(__name__)
 server = app.server
 
 df = pd.read_csv(r'data/merged_date.csv', parse_dates = ['count_date'])
+
 df.set_index('count_date', inplace = True)
-df.drop_duplicates(inplace = True)
-df.sort_index(inplace = True)
-df_original = df.copy()
-df = df[df.index > '2010-01-01']  # for now set this restriction to limit resources
+#df.drop_duplicates(inplace = True)
+#df.sort_index(inplace = True)
+#df_original = df.copy()
+#df = df[df.index > '2010-01-01']  # for now set this restriction to limit resources
 epoch = datetime.utcfromtimestamp(0)
 def unix_time_millis(dt):
     return (dt - epoch).total_seconds() #* 1000.0
@@ -252,18 +253,17 @@ def display_click_data(clickData):
         data = [go.Scatter(x = np.linspace(0, 1, 10), y = np.random.randn(10))]
         plot_title = "Click a marker to show historical traffic count"
     else:
-
         lon = clickData['points'][0]['lon']
         lat = clickData['points'][0]['lat']
         plot_title = f"Historical traffic counts for {clickData['points'][0]['text']}"
-        road_name = clickData['points'][0]['text']
-        df_sub = filter_data_by_coord(df_original, lon, lat)
+#        road_name = clickData['points'][0]['text']
+        df_sub = filter_data_by_coord(df, lon, lat)
         df_sub.sort_index(inplace = True)
-        data = [go.Scatter(x = df_sub.index, y = df_sub['adt'], name = road_name)]
+        data = [go.Scatter(x = df_sub.index, y = df_sub['adt'])]
     layout = dict(title = plot_title,
                   margin = {"l": 50},  # "b": 30, "l": 50,"t": 0,"r": 100
                   height = layout_height + 60,
-                  width = layout_width,
+                  width = layout_width - 80,
                   xaxis = dict(title = 'Date'),
                   yaxis = dict(title = 'Daily average traffoc count'),
               )
