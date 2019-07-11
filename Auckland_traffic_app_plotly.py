@@ -257,7 +257,8 @@ def display_click_data(clickData):
         lat = clickData['points'][0]['lat']
         plot_title = f"Historical traffic counts for {clickData['points'][0]['text']}"
 #        road_name = clickData['points'][0]['text']
-        df_sub = filter_data_by_coord(df, lon, lat)
+        df_sub = df[df['longitude'] == lon]
+        df_sub = df_sub[df_sub['latitude'] == lat]
         df_sub.sort_index(inplace = True)
         data = [go.Scatter(x = df_sub.index, y = df_sub['adt'])]
     layout = dict(title = plot_title,
