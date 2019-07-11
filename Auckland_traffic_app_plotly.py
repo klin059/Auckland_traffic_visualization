@@ -162,7 +162,6 @@ app.layout = html.Div([
                     options = [{'label': value, 'value': value} for value in sampling_count],
                     value = 1,
                     clearable = False
-        #            placeholder = 'One month ahead'
             ),
             
             
@@ -173,8 +172,8 @@ app.layout = html.Div([
     # third row
     html.Div([
         html.Div('', className = 'one column'),
-        html.Div(dcc.Graph(id = 'traffic_count_histogram'), className = 'four columns'),
-        html.Div(dcc.Graph(id = 'time_series_plot'), className = 'five columns')
+        html.Div(dcc.Graph(id = 'traffic_count_histogram'), className = 'five columns'),
+        html.Div(dcc.Graph(id = 'time_series_plot'), className = 'four columns')
     ], className = 'row')
         
 ], className = 'row')
@@ -250,10 +249,10 @@ def filter_data_by_coord(df, lon, lat):
     [dash.dependencies.Input('Auck_map', 'clickData')])
 def display_click_data(clickData):
     if not clickData:
-        data = []
+        data = [go.Scatter(x = np.linspace(0, 1, 10), y = np.random.randn(10))]
         plot_title = "Click a marker to show historical traffic count"
     else:
-#    print(clickData)
+
         lon = clickData['points'][0]['lon']
         lat = clickData['points'][0]['lat']
         plot_title = f"Historical traffic counts for {clickData['points'][0]['text']}"
@@ -262,7 +261,7 @@ def display_click_data(clickData):
         df_sub.sort_index(inplace = True)
         data = [go.Scatter(x = df_sub.index, y = df_sub['adt'], name = road_name)]
     layout = dict(title = plot_title,
-                  margin = {"l": 200},  # "b": 30, "l": 50,"t": 0,"r": 100
+                  margin = {"l": 50},  # "b": 30, "l": 50,"t": 0,"r": 100
                   height = layout_height + 60,
                   width = layout_width,
                   xaxis = dict(title = 'Date'),
@@ -271,4 +270,4 @@ def display_click_data(clickData):
     return {'data':data, 'layout':layout}
 
 if __name__ == '__main__':
-    app.run_server(debug=True)
+    app.run_server(debug=False)
