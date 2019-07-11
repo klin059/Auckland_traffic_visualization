@@ -1,1 +1,1 @@
-gunicorn Auckland_traffic_app_plotly:server
+web: gunicorn Auckland_traffic_app_plotly:server
