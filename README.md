@@ -1,6 +1,6 @@
 # Auckland_traffic_visualization
 
-<img src="images/app_screen_shot.png" width = "800">
+<img src="images/app.png" width = "800">
 
 An interactive visualization of Auckland traffic data from 2010 available at https://akl-traffic-vis.herokuapp.com/.
 
